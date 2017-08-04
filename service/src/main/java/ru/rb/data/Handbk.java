@@ -64,7 +64,7 @@ public abstract class Handbk {
   }
   
   @Column(name = "F_DT")
-  @Convert(converter = LocalDateAttributeConverter.class)
+  @Convert(converter = ru.rb.data.LocalDateAttributeConverter.class)
   private LocalDate fDt;
   public LocalDate getFDt() {
     return fDt;
@@ -74,7 +74,7 @@ public abstract class Handbk {
   }  
   
   @Column(name = "L_DT")
-  @Convert(converter = LocalDateAttributeConverter.class)
+  @Convert(converter = ru.rb.data.LocalDateAttributeConverter.class)
   private LocalDate lDt;
   public LocalDate getLDt() {
     return lDt;

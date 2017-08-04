@@ -1,14 +1,13 @@
 package ru.rb.rest;
 
-import java.time.LocalDate;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 //import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import ru.rb.data.Сurrency;
+import ru.rb.data.Currency;
 
-import static org.junit.Assert.*;
+//import static org.junit.Assert.*;
 
 public class Main {
     
@@ -22,11 +21,11 @@ public class Main {
     //tx = em.getTransaction();
     try {
     //tx.begin();
-        Query qu = em.createQuery("select CUR from Сurrency CUR where CUR.nm = :name");
+        Query qu = em.createQuery("select CUR from Currency CUR where CUR.nm = :name");
         qu.setParameter("name", "USD");
-        Сurrency cur = (Сurrency)qu.getSingleResult();
-        assertEquals("840", cur.getCd());
-        assertEquals(LocalDate.of(9999, 12, 31), cur.getLDt());
+        Currency cur = (Currency)qu.getSingleResult();
+        //assertEquals("840", cur.getCd());
+        //assertEquals(LocalDate.of(9999, 12, 31), cur.getLDt());
     } finally {
       //tx.commit();
       close();

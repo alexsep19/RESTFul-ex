@@ -11,16 +11,18 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import java.time.LocalDate;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name="CCY")
 @DiscriminatorValue("9")
 @Access(AccessType.FIELD)
 @PrimaryKeyJoinColumn(name="ID", referencedColumnName="CT_ID")
-public class Сurrency extends Handbk {
-  public Сurrency() {}
+@XmlRootElement
+public class Currency extends Handbk {
+  public Currency() {}
   
-  public Сurrency( String cd, String nm, String lnm, String dscr
+  public Currency( String cd, String nm, String lnm, String dscr
     , LocalDate fDt, LocalDate lDt, byte grnlt, byte prcs_mtl_flg, String spcl_cd ) {
       setCd(cd); setNm(nm); setLnm(lnm); setDscr(dscr); setFDt(fDt); setLDt(lDt);
       setGrnlt(grnlt); setPrcsMtlFlg(prcs_mtl_flg); setSpclCd(spcl_cd);

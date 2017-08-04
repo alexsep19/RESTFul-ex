@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
-http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
-version="2.1">
-  <persistence-unit name="app-main"> <!-- transaction-type="JTA"--> <!--"RESOURCE_LOCAL"-->
-    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="app-main"> <!-- transaction-type="JTA"-->
+    <!--"RESOURCE_LOCAL"-->
+    <!--provider>org.hibernate.jpa.HibernatePersistenceProvider</provider-->
+    <jta-data-source>jdbc/irbisdev</jta-data-source>
     <class>ru.rb.data.Handbk</class>
-    <class>ru.rb.data.Сurrency</class>
+    <class>ru.rb.data.Currency</class>
+    <class>ru.rb.data.LocalDateAttributeConverter</class>
     <properties>
+      <property name="javax.persistence.schema-generation.database.action" value="none"/>
       <!-- Oracle option -->
-      <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@rb-devel01.rbtechnologies.ru:1521:IRBISRB" />
-      <property name="javax.persistence.jdbc.user" value="irbisrb_dev" />
-      <property name="javax.persistence.jdbc.password" value="irbisrb_dev" />
+      <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@rb-devel01.rbtechnologies.ru:1521:IRBISRB"/>
+      <property name="javax.persistence.jdbc.user" value="irbisrb_dev"/>
+      <property name="javax.persistence.jdbc.password" value="irbisrb_dev"/>
       <property name="hibernate.default_schema" value="IRBISRB_DEV"/>
       <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
-      <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver" />
+      <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
       <!-- End of options -->
       <!-- Hibernate properties -->
-      <property name="hibernate.generate_statistics" value="true" />
-      <property name="hibernate.show_sql" value="true" />
-      <property name="hibernate.format_sql" value="true" />
-      <property name="hibernate.hbm2ddl.auto" value="none" /> <!--"validate" /-->
-      <!--property name="hibernate.temp.use_jdbc_metadata_defaults" value="false"/-->      
-
+      <property name="hibernate.generate_statistics" value="true"/>
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.format_sql" value="true"/>
+      <property name="hibernate.hbm2ddl.auto" value="none"/>
+      <!--property name="hibernate.hbm2ddl.auto" value="validate"/-->
+      <!--property name="hibernate.temp.use_jdbc_metadata_defaults" value="false"/-->
       <!-- Configuring Connection Pool -->
       <!--property name="hibernate.c3p0.min_size" value="5" />
       <property name="hibernate.c3p0.max_size" value="20" />
       <property name="hibernate.c3p0.timeout" value="500" />
       <property name="hibernate.c3p0.max_statements" value="50" />
       <property name="hibernate.c3p0.idle_test_period" value="2000" /-->
-    </properties>    
+    </properties>
   </persistence-unit>
 </persistence>

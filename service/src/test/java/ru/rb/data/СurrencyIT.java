@@ -34,16 +34,16 @@ public class СurrencyIT {
   
   @Test
   public void should1GetCurrencyUsd() {
-    Query qu = em.createQuery("select CUR from Сurrency CUR where CUR.nm = :name");
+    Query qu = em.createQuery("select CUR from Currency CUR where CUR.nm = :name");
     qu.setParameter("name", "USD");
-    Сurrency cur = (Сurrency)qu.getSingleResult();
+    Currency cur = (Currency)qu.getSingleResult();
     assertEquals("840", cur.getCd());
     assertEquals(LocalDate.of(9999, 12, 31), cur.getLDt());
   }
   
   @Test
   public void should2InsertCurrencyEth() {
-    Сurrency cur = new Сurrency( "777", "ETH", "Ethereum", "Ethereum", LocalDate.of(2001,01,01), LocalDate.of(9999,12,31), (byte)0, (byte)0, "777" );
+    Currency cur = new Currency( "777", "ETH", "Ethereum", "Ethereum", LocalDate.of(2001,01,01), LocalDate.of(9999,12,31), (byte)0, (byte)0, "777" );
     EntityTransaction tx = em.getTransaction();
     try {
         tx.begin();
@@ -58,9 +58,9 @@ public class СurrencyIT {
   
   @Test
   public void should3UpdateCurrencyEth() {
-    Query qu = em.createQuery("select CUR from Сurrency CUR where CUR.nm = :name");
+    Query qu = em.createQuery("select CUR from Currency CUR where CUR.nm = :name");
     qu.setParameter("name", "ETH");
-    Сurrency cur = (Сurrency)qu.getSingleResult();
+    Currency cur = (Currency)qu.getSingleResult();
     assertEquals("777", cur.getSpclCd());
     cur.setSpclCd("146");
     EntityTransaction tx = em.getTransaction();
@@ -72,15 +72,15 @@ public class СurrencyIT {
         if ( tx.isActive() ) tx.rollback();
         throw ex;
     }
-    cur = (Сurrency)qu.getSingleResult();    
+    cur = (Currency)qu.getSingleResult();    
     assertEquals("146", cur.getSpclCd());
   }
   
   @Test
   public void should4DeleteCurrencyEth() {
-    Query qu = em.createQuery("select CUR from Сurrency CUR where CUR.nm = :name");
+    Query qu = em.createQuery("select CUR from Currency CUR where CUR.nm = :name");
     qu.setParameter("name", "ETH");
-    Сurrency cur = (Сurrency)qu.getSingleResult();      
+    Currency cur = (Currency)qu.getSingleResult();      
     EntityTransaction tx = em.getTransaction();
     try {
         tx.begin();
@@ -90,7 +90,7 @@ public class СurrencyIT {
         if ( tx.isActive() ) tx.rollback();
         throw ex;
     }
-    qu = em.createQuery("select count(*) from Сurrency CUR where CUR.nm = :name");
+    qu = em.createQuery("select count(CUR) from Currency CUR where CUR.nm = :name");
     qu.setParameter("name", "ETH");
     long val = (Long)qu.getSingleResult();
     //long val = (Long)res[0];

@@ -5,7 +5,7 @@
   <groupId>ru.rb</groupId>
   <artifactId>RESTFul-ex</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
   <name>RESTFul service experimental 1.0</name>
   <repositories>
     <repository>
@@ -19,6 +19,8 @@
     <skipTests>false</skipTests>
     <skipITs>${skipTests}</skipITs>
     <skipUTs>${skipTests}</skipUTs>
+    <version.jboss.bom>10.0.0.Final</version.jboss.bom>
+    <version.glassfish>4.1.1.162</version.glassfish>
   </properties>
       <!--repositories>
         <repository>
@@ -28,6 +30,15 @@
       </repositories-->                      
   <build>
     <plugins>
+      <!--plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.0.0</version>
+        <configuration>
+          <finalName>RESTFul-ex</finalName>
+          <appendAssemblyId>false</appendAssemblyId>
+        </configuration>
+      </plugin-->      
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -57,52 +68,86 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+          <finalName>RESTFul-ex</finalName>
+          <appendAssemblyId>false</appendAssemblyId>
+          <!--webXml>src/main/webapp/WEB-INF/web.xml</webXml-->
+          <failOnMissingWebXml>false</failOnMissingWebXml>
+          <!--filteringDeploymentDescriptors>true</filteringDeploymentDescriptors-->
+        </configuration>
+      </plugin>      
     </plugins>
   </build>
+  <profiles>
+    <profile>
+      <id>glassfish</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>fish.payara.extras</groupId>
+          <artifactId>payara-embedded-all</artifactId>
+          <version>${version.glassfish}</version>
+          <scope>provided</scope>
+        </dependency>
+        <!--dependency>
+          <groupId>org.hibernate</groupId>
+          <artifactId>hibernate-core</artifactId>
+          <version>5.2.10.Final</version>
+        </dependency-->        
+      </dependencies>  
+    </profile>
+    <profile>
+      <id>wildfly</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.wildfly/wildfly-jaxrs -->
+        <dependency>
+            <groupId>org.wildfly</groupId>
+            <artifactId>wildfly-jaxrs</artifactId>
+            <version>${version.jboss.bom}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jboss.spec.javax.ejb/jboss-ejb-api_3.2_spec -->
+        <dependency>
+            <groupId>org.jboss.spec.javax.ejb</groupId>
+            <artifactId>jboss-ejb-api_3.2_spec</artifactId>
+            <version>1.0.0.Final</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.hibernate</groupId>
+          <artifactId>hibernate-core</artifactId>
+          <version>5.2.10.Final</version>
+          <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.hibernate</groupId>
+          <artifactId>hibernate-validator</artifactId>
+          <version>5.0.0.Final</version>
+          <scope>provided</scope>
+        </dependency>        
+      </dependencies>
+    </profile>
+  </profiles>
   <dependencies>
-    <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-core</artifactId>
-      <version>5.2.10.Final</version>
-    </dependency>
-    <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-validator</artifactId>
-      <version>5.0.0.Final</version>
-    </dependency>
     <dependency>
       <groupId>oracle</groupId>
       <artifactId>ojdbc6</artifactId>
       <version>11.2.0.3</version>
     </dependency>    
-    <!--dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <version>1.4.194</version>
-    </dependency-->    
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.11</version>
-      <!--scope>test</scope-->
-    </dependency>
-    <!--dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-java</artifactId>
       <scope>test</scope>
-      <version>2.44.0</version>
     </dependency>
-    <dependency>
-      <groupId>com.opera</groupId>
-      <artifactId>operadriver</artifactId>
-      <scope>test</scope>
-      <version>1.5</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.seleniumhq.selenium</groupId>
-          <artifactId>selenium-remote-driver</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency-->
   </dependencies>
 </project>
