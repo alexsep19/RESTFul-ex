@@ -1,7 +1,9 @@
 package ru.rb.rest;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.ws.rs.ApplicationPath;
@@ -22,4 +24,15 @@ public class ApplicationConfig extends Application {
   public Set<Class<?>> getClasses() {
     return classes;
   }
+  
+  /**
+   * Для работы в GlassFish
+   */
+  @Override
+  public Map<String, Object> getProperties() {
+      Map<String, Object> map = new HashMap<>();
+      map.put("jersey.config.server.disableMoxyJson", true);
+      return map;
+  }  
+  
 }

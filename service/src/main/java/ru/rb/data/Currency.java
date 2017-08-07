@@ -11,6 +11,8 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import java.time.LocalDate;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -19,6 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Access(AccessType.FIELD)
 @PrimaryKeyJoinColumn(name="ID", referencedColumnName="CT_ID")
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Currency extends Handbk {
   public Currency() {}
   

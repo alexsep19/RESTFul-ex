@@ -16,12 +16,18 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import java.time.LocalDate;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @Entity
 @Table(name="CT")
 @Access(AccessType.FIELD)
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn (name="CTH_ID", discriminatorType = DiscriminatorType.INTEGER )
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 //@DiscriminatorValue("0")
 public abstract class Handbk {
   @Id
@@ -64,7 +70,8 @@ public abstract class Handbk {
   }
   
   @Column(name = "F_DT")
-  @Convert(converter = ru.rb.data.LocalDateAttributeConverter.class)
+  @Convert(converter = LocalDateJpaConverter.class)
+  @XmlJavaTypeAdapter(value = LocalDateXmlConverter.class)
   private LocalDate fDt;
   public LocalDate getFDt() {
     return fDt;
@@ -74,7 +81,8 @@ public abstract class Handbk {
   }  
   
   @Column(name = "L_DT")
-  @Convert(converter = ru.rb.data.LocalDateAttributeConverter.class)
+  @Convert(converter = LocalDateJpaConverter.class)
+  @XmlJavaTypeAdapter(value = LocalDateXmlConverter.class)
   private LocalDate lDt;
   public LocalDate getLDt() {
     return lDt;

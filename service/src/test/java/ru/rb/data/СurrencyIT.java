@@ -1,11 +1,19 @@
 package ru.rb.data;
 
+import java.io.ByteArrayOutputStream;
+//import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.OutputStream;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import java.time.LocalDate;
 import javax.persistence.EntityTransaction;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -14,6 +22,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
+import org.json.JSONObject;
+import org.json.XML;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class СurrencyIT {
@@ -42,8 +52,11 @@ public class СurrencyIT {
   }
   
   @Test
-  public void should2InsertCurrencyEth() {
+  public void should2InsertCurrencyEth() throws Exception {
     Currency cur = new Currency( "777", "ETH", "Ethereum", "Ethereum", LocalDate.of(2001,01,01), LocalDate.of(9999,12,31), (byte)0, (byte)0, "777" );
+    saveToXml(cur, "xml.dat");
+    saveToJson(cur, "json.dat");
+    
     EntityTransaction tx = em.getTransaction();
     try {
         tx.begin();
@@ -54,6 +67,8 @@ public class СurrencyIT {
         if ( tx.isActive() ) tx.rollback();
         throw ex;
     }
+    //Save in XML
+    
   }
   
   @Test
@@ -96,4 +111,27 @@ public class СurrencyIT {
     //long val = (Long)res[0];
     assertEquals(0L, val);
   }
+  
+  private static void saveToOutput(Currency cur, OutputStream os) throws JAXBException {
+    JAXBContext cntx = JAXBContext.newInstance(Currency.class);
+    Marshaller mshlr = cntx.createMarshaller();
+    mshlr.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+    mshlr.marshal(cur, os); //(cur, new File(fileName));
+  }
+  
+  public static void saveToXml(Currency cur, String fileName) throws Exception {
+    try ( FileOutputStream fos = new FileOutputStream(fileName)) {
+      saveToOutput(cur, fos);
+    }
+  }
+  
+  private static void saveToJson(Currency cur, String fileName) throws Exception {
+    try ( ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
+      saveToOutput(cur, bos);
+      JSONObject jObj =  XML.toJSONObject(bos.toString());
+      try ( FileWriter fw = new FileWriter(fileName) ) {
+        jObj.write(fw);
+      }
+    }
+  }  
 }
