@@ -44,7 +44,8 @@ public class CurrencyService {
       if (cur == null) throw new NoResultException();
       return cur;
     } catch ( NoResultException ex ) {
-      throw new NotFoundException(MessageFormat.format("Currency with code {0} not found", code), ex);
+      throw new WebApplicationException(Response.status(404).type("text/plain").entity(MessageFormat.format("Currency with code {0} not found", code)).build());
+      //NotFoundException(MessageFormat.format("Currency with code {0} not found", code), ex);
     }
   }
   
@@ -77,11 +78,14 @@ public class CurrencyService {
   @POST
   public Response createCurrency(Currency curr) {
     if (curr == null) throw new BadRequestException();
-    /*try { saveToXml(curr, "C:\\xml.dat"); } catch (Exception  ex) { ex.printStackTrace();}*/
+    //try {
     em.persist(curr);
     String id = String.valueOf(curr.getCtId());
     URI bookUri = uriInfo.getAbsolutePathBuilder().path(id).build();
     return Response.created(bookUri).build();
+    /*} catch ( Exception ex ) {
+      throw new WebApplicationException(Response.status(422).entity(ex.getMessage()).build());
+    }*/
   }
   
   @PUT
@@ -91,9 +95,10 @@ public class CurrencyService {
     try {
       curOrig = getCurrencyByCode(curr.getNm());
       if ( curr.getCtId() != curOrig.getCtId() )
-        throw new BadRequestException(MessageFormat.format("Currency with code {0} not found for update", curr.getNm()));
+        throw new WebApplicationException(Response.status(400).type("text/plain").entity(MessageFormat.format("The passed record has the wrong Ct_Id: expected - {0}, passed - {1}", curOrig.getCtId(), curr.getCtId())).build());
     } catch ( NotFoundException ex ) {
-      throw new BadRequestException(MessageFormat.format("The passed record has the wrong Ct_Id: expected - {0}, passed - {1}", curOrig.getCtId(), curr.getCtId()), ex);
+        throw new WebApplicationException(Response.status(400).type("text/plain").entity(MessageFormat.format("Currency with code {0} not found for update", curr.getNm())).build());
+      //throw new BadRequestException(MessageFormat.format("The passed record has the wrong Ct_Id: expected - {0}, passed - {1}", curOrig.getCtId(), curr.getCtId()), ex);
     }
 
     em.merge(curr);

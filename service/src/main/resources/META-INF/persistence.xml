@@ -4,10 +4,10 @@
     <!-- transaction-type="JTA"-->
     <!--"RESOURCE_LOCAL"-->
     <!--provider>org.hibernate.jpa.HibernatePersistenceProvider</provider-->
-    <jta-data-source>jdbc/irbisdev</jta-data-source>
+    <jta-data-source>IRBISDEV</jta-data-source>
     <class>ru.rb.data.Handbk</class>
     <class>ru.rb.data.Currency</class>
-    <class>ru.rb.data.LocalDateJpaConverter</class>
+    <class>ru.rb.data.util.LocalDateJpaConverter</class>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="none"/>
       <!-- Oracle option -->

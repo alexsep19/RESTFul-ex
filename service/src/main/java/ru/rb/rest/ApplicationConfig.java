@@ -13,10 +13,14 @@ import javax.ws.rs.core.Application;
 @ApplicationPath("/rs")
 public class ApplicationConfig extends Application {
   private final Set<Class<?>> classes;
-  
+
+   /**
+   * Для работы в GlassFish
+   */
   public ApplicationConfig() {
     HashSet<Class<?>> set = new HashSet<>();
     set.add(CurrencyService.class);
+    //set.add(org.eclipse.persistence.jaxb.rs.MOXyJsonProvider.class);
     classes = Collections.unmodifiableSet(set);
   }
   
@@ -25,14 +29,11 @@ public class ApplicationConfig extends Application {
     return classes;
   }
   
-  /**
-   * Для работы в GlassFish
-   */
   @Override
   public Map<String, Object> getProperties() {
       Map<String, Object> map = new HashMap<>();
       map.put("jersey.config.server.disableMoxyJson", true);
       return map;
-  }  
+  } 
   
 }

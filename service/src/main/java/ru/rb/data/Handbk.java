@@ -19,7 +19,10 @@ import java.time.LocalDate;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import ru.rb.data.util.LocalDateJpaConverter;
+//import ru.rb.data.util.LocalDateJsonDeserializer;
+//import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @Entity
 @Table(name="CT")
@@ -71,7 +74,8 @@ public abstract class Handbk {
   
   @Column(name = "F_DT")
   @Convert(converter = LocalDateJpaConverter.class)
-  @XmlJavaTypeAdapter(value = LocalDateXmlConverter.class)
+  //@JsonDeserialize(using = LocalDateJsonDeserializer.class)  
+  //@XmlJavaTypeAdapter(value = LocalDateXmlConverter.class)
   private LocalDate fDt;
   public LocalDate getFDt() {
     return fDt;
@@ -82,7 +86,8 @@ public abstract class Handbk {
   
   @Column(name = "L_DT")
   @Convert(converter = LocalDateJpaConverter.class)
-  @XmlJavaTypeAdapter(value = LocalDateXmlConverter.class)
+  //@JsonDeserialize(using = LocalDateJsonDeserializer.class) 
+  //@XmlJavaTypeAdapter(value = LocalDateXmlConverter.class)
   private LocalDate lDt;
   public LocalDate getLDt() {
     return lDt;

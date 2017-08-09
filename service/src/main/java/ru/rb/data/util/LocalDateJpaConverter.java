@@ -1,4 +1,4 @@
-package ru.rb.data;
+package ru.rb.data.util;
 
 import javax.persistence.Converter;
 import javax.persistence.AttributeConverter;

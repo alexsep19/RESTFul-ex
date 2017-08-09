@@ -1,4 +1,4 @@
-package ru.rb.data;
+package ru.rb.data.util;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

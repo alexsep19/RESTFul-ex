@@ -6,7 +6,7 @@
   <artifactId>RESTFul-ex</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
-  <name>RESTFul service experimental 1.0</name>
+  <name>RESTFul service experimental</name>
   <repositories>
     <repository>
       <id>Datanucleus</id>
@@ -100,8 +100,15 @@
           <artifactId>hibernate-core</artifactId>
           <version>5.2.10.Final</version>
         </dependency-->        
-      </dependencies>  
+<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310 -->
+<dependency>
+    <groupId>com.fasterxml.jackson.datatype</groupId>
+    <artifactId>jackson-datatype-jsr310</artifactId>
+    <version>2.9.0</version>
+</dependency>
+      </dependencies> 
     </profile>
+    
     <profile>
       <id>wildfly</id>
       <activation>
